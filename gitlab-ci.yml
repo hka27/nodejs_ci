@@ -14,3 +14,5 @@ deploy-prod:
   stage: deploy
   script:
     - console.log("This job deploys something from the $CI_COMMIT_BRANCH branch.")
+tags:
+  - docker
