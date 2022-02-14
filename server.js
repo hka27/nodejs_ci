@@ -7,5 +7,5 @@ app.get('/*',(req, res)=>{
     })
     res.status(200)
 })
-app.listen(port,()=>console.log(`server running on port ${port}`))
+app.listen(port,()=>console.log(`server running on port is ${port}`))
 module.exports = app
