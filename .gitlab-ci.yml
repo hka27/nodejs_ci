@@ -1,15 +1,8 @@
-build:
-  stage: build
-  image: node:latest
+cache:
+  paths:
+    - node_modules/
+before_script:
+  - npm install
+test:
   script:
-    - npm install
-    - npm run test
-  tags:
-    - docker
-  only:
-    - dev
-
-# test_db:
-#   script:
-#     - npm install
-#     - node ./specs/start.js ./specs/db-postgres.spec.js
+    - npm test
