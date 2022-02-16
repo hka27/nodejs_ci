@@ -29,7 +29,7 @@ module.exports = app
 //     port:587,
 //     auth: {
 //         user: "apollo101@buzzr.ai",
-//         pass: "hhliolnzvydrfclz"
+//         pass: ""
 //     }
 // });
 // /*------------------SMTP Over-----------------------------*/
