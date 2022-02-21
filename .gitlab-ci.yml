@@ -1,8 +1,3 @@
-image: docker:latest
-
-services: 
-  - docker:dind
-
 before_script:
   - docker-compose version
 
@@ -32,7 +27,7 @@ teardown:
     - docker-compose --env-file=./config/.env.stage down
   only:
     - dev
-    
+
 deploy:
   stage: deploy
   script:
