@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  app:
+    image: app
+    environment:
+      - SCRIPT
+      - PORT
+    container_name: app
+    command: npm run ${SCRIPT}
+    ports:
+      - ${PORT}:${PORT}
+    restart: always

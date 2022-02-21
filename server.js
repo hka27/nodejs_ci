@@ -1,6 +1,6 @@
 const app = require('express')()
-const port = process.env.port || 8888
-
+const port = process.env.PORT || 8888
+console.log(process.env)
 app.get('/*',(req, res)=>{
     res.json({
         message: req.url
