@@ -28,7 +28,8 @@ run test:
 build image:
   stage: build
   image: docker:20.10.12
-  services: docker:20.10.12-dind
+  services: 
+    - docker:20.10.12-dind
   # rules:
   #   - if: $CI_PIPELINE_SOURCE == 'schedule'
   script:
