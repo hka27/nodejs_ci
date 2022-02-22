@@ -12,13 +12,9 @@
 #   - teardown
 #   - deploy
 
-some test job:
-  image: node:16.13.2
-  # rules:
-  #   - if: $CI_PIPELINE_SOURCE != 'schedule'
-  script:
-    - npm run test
+
 run test:
+  stage: test
   image: $CI_REGISTRY_IMAGE
   # rules:
   #   - if: $CI_PIPELINE_SOURCE != 'schedule'
