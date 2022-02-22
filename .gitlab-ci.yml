@@ -13,13 +13,13 @@
 #   - deploy
 
 
-run test:
-  stage: test
-  image: $CI_REGISTRY_IMAGE
-  # rules:
-  #   - if: $CI_PIPELINE_SOURCE != 'schedule'
-  script:
-    - npm run test
+# run test:
+#   stage: test
+#   image: $CI_REGISTRY_IMAGE
+#   # rules:
+#   #   - if: $CI_PIPELINE_SOURCE != 'schedule'
+#   script:
+#     - npm run test
 
 build image:
   stage: build
@@ -29,11 +29,14 @@ build image:
   # rules:
   #   - if: $CI_PIPELINE_SOURCE == 'schedule'
   script:
-    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
-    - docker build -t $CI_REGISTRY_IMAGE .
-    - docker push $CI_REGISTRY_IMAGE
+    # - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    # - docker build -t $CI_REGISTRY_IMAGE .
+    # - docker push $CI_REGISTRY_IMAGE
+    - docker-compose --env-file=./config/.env.dev up -d
   only:
     - dev
+after_scripts:
+  - docker-compose down
 
 # test:
 #   stage: test
