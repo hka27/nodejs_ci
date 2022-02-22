@@ -36,7 +36,8 @@ build image:
   only:
     - dev
 after_scripts:
-  - docker-compose down
+  script:
+    - docker-compose down
 
 # test:
 #   stage: test
