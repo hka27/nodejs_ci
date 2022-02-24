@@ -20,7 +20,7 @@
 #   #   - if: $CI_PIPELINE_SOURCE != 'schedule'
 #   script:
 #     - npm run test
-image: docker
+image: docker/compose
 services: 
   - docker:dind
 
@@ -37,7 +37,8 @@ build image:
 test image:
   stage: test
   script: 
-    - docker-compose down
+    - docker stack rm app_container
+    - docker stack deploy --compose-file app_container
     - docker-compose --env-file=./config/.env.dev up -d
   only:
     - dev
