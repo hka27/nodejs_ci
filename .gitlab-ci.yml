@@ -74,7 +74,7 @@ deploy image:
     - apk add openssh-client # Add SSH client for alpine 
     - eval $(ssh-agent -s) # Run the SSH client 
     # Adding environment's variable ID_RSA to the SSH client's agent that manages the private keys
-    - echo "$ID_RSA" | ssh-add -
+    - echo "${ID_RSA}" | ssh-add -
     # Create the SSH directory and give it the right permissions
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
