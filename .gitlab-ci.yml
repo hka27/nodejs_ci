@@ -20,9 +20,9 @@
 #   #   - if: $CI_PIPELINE_SOURCE != 'schedule'
 #   script:
 #     - npm run test
-image: docker/compose
+image: registry.gitlab.com/hka27/repo-mirror/docker/compose:latest
 services: 
-  - docker:dind
+  - registry.gitlab.com/hka27/repo-mirror/docker:dind
 
 build image:
   stage: build
@@ -48,7 +48,7 @@ teardown image:
   needs: 
     - "test image"
   script:
-    - docker-compose down
+    - docker-compose --env-file=./config/.env.dev down
   only:
     - dev
 
