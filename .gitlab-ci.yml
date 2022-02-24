@@ -75,7 +75,7 @@ deploy image:
     - eval $(ssh-agent -s) # Run the SSH client 
     - mkdir -p ~/.ssh
     - echo "$ID_RSA" > ~/.ssh/id_rsa 
-    - chmod 400 ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
     - ssh-add ~/.ssh/id_rsa 
 
   script:
