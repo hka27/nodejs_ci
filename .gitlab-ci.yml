@@ -73,16 +73,16 @@ deploy image:
   before_script:
     - apk add openssh-client # Add SSH client for alpine 
     - eval $(ssh-agent -s) # Run the SSH client 
-    # Adding environment's variable ID_RSA to the SSH client's agent that manages the private keys
-    - echo "$ID_RSA" | ssh-add -
-    # Create the SSH directory and give it the right permissions
     - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
+    - echo "$ID_RSA" > ~/.ssh/id_rsa 
+    - chmod 400 ~/.ssh/id_rsa
+    # - ssh-add ~/.ssh/id_rsa 
+
   script:
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no deployer@$SERVER_IP "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no deployer@$SERVER_IP "docker pull $CI_REGISTRY_IMAGE"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no deployer@$SERVER_IP "docker-compose --env-file=./config/.env.dev down"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no deployer@$SERVER_IP "docker-compose --env-file=./config/.env.dev up -d"
+    - ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no deployer@$SERVER_IP "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
+    - ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no deployer@$SERVER_IP "docker pull $CI_REGISTRY_IMAGE"
+    - ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no deployer@$SERVER_IP "docker-compose --env-file=./config/.env.dev down"
+    - ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no deployer@$SERVER_IP "docker-compose --env-file=./config/.env.dev up -d"
   only:
     - dev
 
