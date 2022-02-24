@@ -5,7 +5,7 @@ services:
     environment:
       - SCRIPT
       - PORT
-    container_name: app
+    container_name: app_container
     command: npm run ${SCRIPT}
     ports:
       - ${PORT}:${PORT}
