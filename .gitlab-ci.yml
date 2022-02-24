@@ -44,7 +44,8 @@ test image:
 
 teardown image:
   stage: test
-  needs: ["test image"]
+  needs: 
+    - "test image"
   script:
     - docker-compose down
   only:
@@ -65,10 +66,13 @@ push image:
 #     - ssh -i ./config/id_rsa 35.200.243.64
 deploy image:
   stage: deploy
-  needs: ["push image"]
+  needs: 
+    - "push image"
   script:
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no deployer@$SERVER_IP
     - cat /etc/os-release 
+  only:
+    - dev
 
 # test:
 #   stage: test
