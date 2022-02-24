@@ -47,20 +47,25 @@ teardown image:
   needs: ["test image"]
   script:
     - docker-compose down
+  only:
+    - dev
 
 push image:
   stage: deploy
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker push $CI_REGISTRY_IMAGE
+  only:
+    - dev
 
-pull image:
-  stage: deploy
-  needs: ["push image"]
-  script:  
-    - ssh -i ./config/id_rsa 35.200.243.64
+# pull image:
+#   stage: deploy
+#   needs: ["push image"]
+#   script:  
+#     - ssh -i ./config/id_rsa 35.200.243.64
 deploy image:
   stage: deploy
+  needs: ["push image"]
   script:
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no deployer@$SERVER_IP
     - cat /etc/os-release 
