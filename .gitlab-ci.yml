@@ -37,8 +37,8 @@ build image:
 test image:
   stage: test
   script: 
-    - docker stack rm app_container
-    - docker stack deploy --compose-file app_container
+    - docker-compose down
+    # - docker stack deploy --compose-file app_container
     - docker-compose --env-file=./config/.env.dev up -d
   only:
     - dev
