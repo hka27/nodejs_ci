@@ -21,8 +21,8 @@
 #   script:
 #     - npm run test
 image: docker:20.10.12
-  services: 
-    - docker:20.10.12-dind
+services: 
+  - docker:20.10.12-dind
 
 build image:
   stage: build
