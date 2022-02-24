@@ -20,9 +20,9 @@
 #   #   - if: $CI_PIPELINE_SOURCE != 'schedule'
 #   script:
 #     - npm run test
-image: docker:20.10.12
+image: docker
 services: 
-  - docker:20.10.12-dind
+  - docker-dind
 
 build image:
   stage: build
