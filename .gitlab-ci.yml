@@ -66,6 +66,7 @@ push image:
 #   script:  
 #     - ssh -i ./config/id_rsa 35.200.243.64
 deploy image:
+  image: alpine:latest
   stage: deploy
   needs: 
     - "push image"
