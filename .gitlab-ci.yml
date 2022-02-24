@@ -73,9 +73,10 @@ deploy image:
   before_script:
     - apk add openssh-client # Add SSH client for alpine 
     - eval $(ssh-agent -s) # Run the SSH client 
-    - echo "$ID_RSA" | tr -d '\r' | ssh-add - > /dev/null
     - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
+    - echo "$ID_RSA" > ~/.ssh/id_rsa 
+    - ssh-add ~/.ssh/id_rsa 
+    - chmod 400 ~/.ssh/id_rsa
 
   script:
     - ssh -o StrictHostKeyChecking=no deployer@$SERVER_IP "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
