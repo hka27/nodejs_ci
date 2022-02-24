@@ -22,7 +22,7 @@
 #     - npm run test
 image: docker
 services: 
-  - docker-dind
+  - docker:dind
 
 build image:
   stage: build
