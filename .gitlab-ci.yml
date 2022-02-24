@@ -71,8 +71,12 @@ deploy image:
   needs: 
     - "push image"
   script:
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no deployer@$SERVER_IP
-    - cat /etc/os-release 
+    - chmod og= $ID_RSA
+    - apk update && apk add openssh-client
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no deployer@$SERVER_IP "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no deployer@$SERVER_IP "docker pull $CI_REGISTRY_IMAGE"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no deployer@$SERVER_IP "docker-compose --env-file=./config/.env.dev down"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no deployer@$SERVER_IP "docker-compose --env-file=./config/.env.dev up -d"
   only:
     - dev
 
