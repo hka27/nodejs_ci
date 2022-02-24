@@ -20,24 +20,50 @@
 #   #   - if: $CI_PIPELINE_SOURCE != 'schedule'
 #   script:
 #     - npm run test
+image: docker:20.10.12
+  services: 
+    - docker:20.10.12-dind
 
 build image:
   stage: build
-  image: docker:20.10.12
-  services: 
-    - docker:20.10.12-dind
-  # rules:
-  #   - if: $CI_PIPELINE_SOURCE == 'schedule'
   script:
     # - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
-    # - docker build -t $CI_REGISTRY_IMAGE .
+    - docker build -t $CI_REGISTRY_IMAGE .
     # - docker push $CI_REGISTRY_IMAGE
+    # - docker-compose --env-file=./config/.env.dev up -d
+  only:
+    - dev
+
+test image:
+  stage: test
+  script: 
+    - docker-compose down
     - docker-compose --env-file=./config/.env.dev up -d
   only:
     - dev
-after_scripts:
+
+teardown image:
+  stage: test
+  needs: ["test image"]
   script:
     - docker-compose down
+
+push image:
+  stage: deploy
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE
+
+pull image:
+  stage: deploy
+  needs: ["push image"]
+  script:  
+    - ssh -i ./config/id_rsa 35.200.243.64
+deploy image:
+  stage: deploy
+  script:
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no deployer@$SERVER_IP
+    - cat /etc/os-release 
 
 # test:
 #   stage: test
