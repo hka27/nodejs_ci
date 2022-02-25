@@ -71,11 +71,11 @@ deploy image:
   needs: 
     - "push image"
   before_script:
-    # - apk add openssh-client # Add SSH client for alpine 
+    - apk add openssh-client # Add SSH client for alpine 
     # - eval $(ssh-agent -s) # Run the SSH client 
-    # - mkdir -p ~/.ssh
-    # - echo "$ID_RSA" > ~/.ssh/id_rsa 
-    # - chmod 400 ~/.ssh/id_rsa
+    - mkdir -p ~/.ssh
+    - echo "$ID_RSA" > ~/.ssh/id_rsa 
+    - chmod 400 ~/.ssh/id_rsa
     # # - ssh-add ~/.ssh/id_rsa 
 
   script:
