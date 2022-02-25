@@ -37,9 +37,9 @@ build image:
 test image:
   stage: test
   script: 
-    - docker-compose --env-file=./config/.env.dev down
+    - docker-compose --env-file=config/.env.dev down
     # - docker stack deploy --compose-file app_container
-    - docker-compose --env-file=./config/.env.dev up -d
+    - docker-compose --env-file=config/.env.dev up -d
   only:
     - dev
 
@@ -48,7 +48,7 @@ teardown image:
   needs: 
     - "test image"
   script:
-    - docker-compose --env-file=./config/.env.dev down
+    - docker-compose --env-file=config/.env.dev down
   only:
     - dev
 
@@ -71,11 +71,11 @@ deploy image:
   needs: 
     - "push image"
   before_script:
-    # - apk add openssh-client # Add SSH client for alpine 
+    - apk add openssh-client # Add SSH client for alpine 
     # - eval $(ssh-agent -s) # Run the SSH client 
-    # - mkdir -p ~/.ssh
-    # - echo "$ID_RSA" > ~/.ssh/id_rsa 
-    # - chmod 400 ~/.ssh/id_rsa
+    - mkdir -p ~/.ssh
+    - echo "$ID_RSA" > ~/.ssh/id_rsa 
+    - chmod 400 ~/.ssh/id_rsa
     # # - ssh-add ~/.ssh/id_rsa 
 
   script:
@@ -85,7 +85,7 @@ deploy image:
         # Commands to run in bash
         cd ~/app
         docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-        docker pull $CI_REGISTRY_IMAGE
+        docker pull $CI_REGISTRY_IMAGE/app
         docker-compose --env-file=config/.env.prod down
         docker-compose --env-file=config/.env.prod up -d
       "
