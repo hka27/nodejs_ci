@@ -37,9 +37,9 @@ build image:
 test image:
   stage: test
   script: 
-    - docker-compose --env-file=./config/.env.dev down
+    - docker-compose --env-file=config/.env.dev down
     # - docker stack deploy --compose-file app_container
-    - docker-compose --env-file=./config/.env.dev up -d
+    - docker-compose --env-file=config/.env.dev up -d
   only:
     - dev
 
@@ -48,7 +48,7 @@ teardown image:
   needs: 
     - "test image"
   script:
-    - docker-compose --env-file=./config/.env.dev down
+    - docker-compose --env-file=config/.env.dev down
   only:
     - dev
 
