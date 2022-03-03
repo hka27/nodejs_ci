@@ -1,0 +1,8 @@
+stages:
+  - build
+build image:
+  stage: build
+  script:
+    - echo 'done' 
+  tags:
+    - shell
